@@ -251,3 +251,49 @@ def bark2frq(b, m=''):
         f = np.multiply(f, np.sign(b))  # force to be odd
     _, c = frq2bark(f, m)
     return f, c
+
+
+def cent2frq(c):
+    '''
+    FRQ2ERB  Convert Hertz to Cents frequency scale [C,CR]=(FRQ)
+    frq = frq2mel(c) converts a vector of frequencies in cents
+    to the corresponding values in Hertz.
+    100 cents corresponds to one semitone and 440Hz corresponds to 5700
+    cents.
+    The cr output gives the gradient in Hz/cent.
+
+    The relationship between cents and frq is given by:
+
+        c = 1200 * log2(f/(440*(2^((3/12)-5)))
+
+    Parameters
+    ----------
+    c : np.array
+        Cents freq Scale
+
+    Returns
+    -------
+    tuple :
+        frq : of frequencies in Hz
+        cr : the gradient in Hz/cent.
+
+    # TODO: plot graph
+
+    Reference:
+
+     [1] Ellis, A.
+         On the Musical Scales of Various Nations
+         Journal of the Society of Arts, 1885, 485-527
+      Copyright (C) Mike Brookes 1998
+      Version: $Id: cent2frq.m 3123 2013-06-19 19:03:53Z dmb $
+
+    VOICEBOX is a MATLAB toolbox for speech processing.
+    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
+    '''
+    p = 1200/np.log(2)
+    q = 5700-p*np.log(440)
+    # c = np.multiply(1200*np.sign(frq), np.log2(frq/(440*2 ** ((3.0/12)-5))))
+    af = np.exp((np.abs(c)-q)/p)
+    frq = np.multiply(np.sign(c), af)
+    cr = af/p
+    return frq, cr
