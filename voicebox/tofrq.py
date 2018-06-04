@@ -57,7 +57,7 @@ def erb2frq(erb):
     Returns
     -------
     tuple
-        frq : of frequencies in Hz.
+        frq : array of frequencies in Hz.
         bnd :
 
     TODO: GRAPH, bnd
@@ -189,7 +189,7 @@ def bark2frq(b, m=''):
     Returns
     -------
     tuple
-        f : frequency values in Hz
+        f : array of frequency values in Hz
         c : Critical bandwidth: d(freq)/d(bark)
 
    [1] H. Traunmuller, Analytical Expressions for the
@@ -274,7 +274,7 @@ def cent2frq(c):
     Returns
     -------
     tuple :
-        frq : of frequencies in Hz
+        frq : array of frequencies in Hz
         cr : the gradient in Hz/cent.
 
     # TODO: plot graph
@@ -297,3 +297,66 @@ def cent2frq(c):
     frq = np.multiply(np.sign(c), af)
     cr = af/p
     return frq, cr
+
+
+def midi2frq(n, s='e'):
+    '''
+    MIDI2FRQ	Convert musical note numbers to frequencies F=(N,S)
+
+    notes are numbered in semitones with middle C being 60
+    On the equal tempered scale, note 69 (the A above middle C)
+    has a frequency of 440 Hz.
+
+    see FRQ2NOTE for the inverse transform
+    Pythagorean
+    sharps 1 2187/2048 9/8 19683/16384 81/64 4/3 729/512  3/2 6561/4096 27/16 59049/32768 243/128 2
+    flats  1 256/243   9/8 32/27       81/64 4/3 1024/729 3/2 128/81    27/16 16/9        243/128 2
+
+    Just Intonation
+    sharps 1 25/24 9/8 75/64 5/4 4/3 45/32  3/2 25/16 5/3 225/128 15/8 2
+    flats  1 16/15 9/8 6/5   5/4 4/3 108/75 3/2 8/5   5/3 18/10   15/8 2
+
+    Parameters
+    ----------
+    n : np.array
+        musical note numbers
+    s : str
+        Different options for conversion:
+            'e' equal tempered (default)
+            'p' pythagorean scale
+            'j' just intonation
+
+    Returns
+    -------
+    np.array
+        array of frequency in Hz.
+
+
+    Copyright (C) Mike Brookes 1997
+    Version: $Id: midi2frq.m 713 2011-10-16 14:45:43Z dmb $
+
+    VOICEBOX is a MATLAB toolbox for speech processing.
+    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
+    '''
+    if s is 'e':
+        f = 440*np.exp((n-69)*np.log(2)/12)
+        return f
+
+    if s is 'p':
+        r = np.array([256/243, 9/8, 32/27, 81/64, 4/3, 729/512, 3/2, 128/81,
+                      27/16, 16/9, 243/128])
+    elif s is 'j':
+        r = np.array([16/15, 9/8, 6/5, 5/4, 4/3, 36/25, 3/2, 8/5, 5/3, 9/5,
+                      15/8])
+    else:
+        raise ValueError("invalid option for s, only 'e', 'p' and 'j' "
+                         + "are valid")
+    c = np.concatenate(([0, 0], np.subtract(12*np.log(r)/np.log(2),
+                                            list(range(1, 12))), [0]))
+    nm = np.mod(n, 12)
+    na = np.floor(nm)
+    nb = nm-na
+    f = 440*np.exp((n+np.multiply(np.take(c, (na+1).astype(int)), 1-nb)
+                    + np.multiply(np.take(c, (na+2).astype(int)), nb)-69)
+                   * np.log(2)/12)
+    return f
