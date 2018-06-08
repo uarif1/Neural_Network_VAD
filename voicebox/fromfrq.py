@@ -94,7 +94,6 @@ def frq2bark(f, m=''):
            legend('Exact', 'voicebox', 'Traunmuller1990', ...
                   'Traunmuller1983', 'Zwicker1980', 'Location', 'South');
 
-
           Copyright (C) Mike Brookes 2006-2010
           Version: $Id: frq2bark.m 4501 2014-04-24 06:28:21Z dmb $
 
