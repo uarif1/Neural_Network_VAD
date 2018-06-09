@@ -286,15 +286,15 @@ def filtbankm(n, fs, p=None, fl=None, fh=None, w='f'):
     # ffact(wleft+wright == 0) = 0 # disable null width triangles shouldn't
     # need this if all frequencies are distinct
     # fall = np.sort(foutin)
-    ifall = np.argsort(foutin)
+    ifall = np.argsort(foutin, kind='mergesort')
     jfall = np.zeros(nfall, dtype=int)
-    infall = np.arange(0, nfall)
+    infall = np.arange(nfall)
     jfall[ifall] = infall  # unsort->sort index
     # zap nodes that are much too small/big
-    ffact[ifall[np.concatenate((np.arange(0, max(jfall[0], jfall[mfout])-2,
+    ffact[ifall[np.concatenate((np.arange(0, max(jfall[0], jfall[mfout])-1,
                                           dtype=np.int32),
                                 np.arange(min(jfall[mfout-1], jfall[nfall-1])
-                                          + 1, nfall, dtype=np.int32)))]] = 0
+                                          + 2, nfall, dtype=np.int32)))]] = 0
 
     nxto = np.cumsum(ifall <= mfout-1)
     nxti = np.cumsum(ifall > mfout-1)
@@ -375,16 +375,15 @@ def filtbankm(n, fs, p=None, fl=None, fh=None, w='f'):
         np.concatenate((jx1, jx2, jx3, jx4))
     )), axis=0)
     # [iox; [wx1 wx2 wx3 wx4] > 0]
-    msk = iox[1, :] <= (nfall+mfout)/2
+    msk = iox[1, :]+1 <= (nfall+mfout)/2
     # convert negative frequencies to positive
-    iox[1, msk] = (nfall+mfout+1)-iox[1, msk]
+    iox[1, msk] = (nfall+mfout-1)-iox[1, msk]
     if highex:
         iox[0, iox[0, :] == mfout-1] = mfout-2  # merge highest two output node
     if lowex:
         iox[0, iox[0, :] == 2] = 3  # merge lowest two output nodes
-
     x = csr_matrix((np.concatenate((wx1, wx2, wx3, wx4)),
-                    (iox[0, :]-1-lowex, np.maximum(iox[1, :]-nfall+nf+1, 1))),
+                    (iox[0, :]-1-lowex, np.maximum(iox[1, :]-nfall+nf+1, 0))),
                    shape=(p, nf))
     # TODO: no need to do sparse i think
     # x = np.concatenate((wx1, wx2, wx3, wx4))
