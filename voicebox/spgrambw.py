@@ -22,7 +22,7 @@ from numpy.fft import fft
 
 from filtbankm import filtbankm
 from enframe import enframe
-from rfft importt rfft
+from rfft import rfft
 
 
 def spgrambw(s, fs, mode='', bw=200, frange=None, tinc=0):
