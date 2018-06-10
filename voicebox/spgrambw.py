@@ -37,14 +37,18 @@ def spgrambw(s, fs, mode='', bw=200, frange=None, tinc=0):
     s : np.array
         speech signal, or single-sided power spectrum array, S(NT,NF), in
         power per Hz
+
     fs : float
         sample fequency (Hz)
+
     bw : float
         bandwidth resolution in Hz (DFT window length = 1.81/BW)[default: 200]
+
     frange : np.array
         frequency range [Fmin Fstep Fmax]. If all 3 are omittend then Fstep is
         is taken to be (Fmax-Fmin)/257, Fmin is taken to be 0 and Fmax is taken
         to be FS/2.
+
     tinc : float
         output frame increment in seconds [0 or missing uses default=0.45/BW]
 
