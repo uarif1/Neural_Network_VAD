@@ -17,9 +17,6 @@
 
 import numpy as np
 
-from numpy.matlib import repmat
-from numpy.fft import fft
-
 from filtbankm import filtbankm
 from enframe import enframe
 from rfft import rfft
