@@ -72,14 +72,14 @@ def v_findpeaks(y, w, x=None):
         dr[1:] = r[1:]-r[:-1]  # only 0 index diff from matlab
         rc = np.ones(ny)
         rc[r] = 1-dr
-        rc[0] = 1
+        rc[0] = 0
         rs = np.cumsum(rc)  # = time since the last rise
 
         df = np.where(dx < 0)[0]+1
         df[1:] = f[1:]-f[: -1]
         fc = np.ones(ny)
         fc[f] = 1-df
-        fc[0] = 1
+        fc[0] = 0
         fs = np.cumsum(fc)  # = time since the last fall
 
         rp = repmat(-1, ny, 1).reshape(ny)
@@ -92,7 +92,9 @@ def v_findpeaks(y, w, x=None):
         # the final term centres peaks within a plateau
 
         k = np.where((rs < fs) & (fq < rq) & (np.floor((fq-rs)/2) == 0))
-        k = k[0][:-1] + 1
+        k = k[0] + 1
+        if k[-1] == len(y):
+            k = k[:-1]
         v = y[k]
         if x is not None:  # convert to the x-axis using linear interpolation
             k = x[k]
