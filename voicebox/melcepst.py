@@ -19,7 +19,7 @@ import numpy as np
 
 from enframe import enframe
 from rfft import rfft
-from melbank import melbank
+from melbankm import melbankm
 from rdct import rdct
 
 
@@ -79,19 +79,21 @@ def melcepst(s, fs=16000, nc=12, p=None, n=None, inc=None, fl=0, fh=0.5):
                                           * np.arange(0, n) / (n-1)), inc)
     f = rfft(z.T)
     m, _, a, b = melbankm(p, n, fs, fl, fh)
-    pw = f[np.arange(a, b), :]*np.conj(f[np.arange(a, b), :])
+    pw = f[np.arange(a, b+1), :]*np.conj(f[np.arange(a, b+1), :])
     pth = np.max(pw)*1E-20
     ath = np.sqrt(pth)
-    y = np.log(np.max(m*np.abs(f[np.arange(a, b), :]), ath))
+    y = np.log(np.maximum(m * np.abs(f[np.arange(a, b+1), :]), ath))
     c = rdct(y).T
     nf = c.shape[0]
     nc = nc+1
     if p > nc:
-        c = c[:, :]
+        c = c[:, :nc]
     elif p < nc:
         c = np.concatenate((c, np.zeros((nf, nc-p))))
-    c = c[:, :-1]
-    nc = nc-1
+    c = c[:, 1:]  # get rid of 0th coeff
+    # nc = nc-1
+
+    return c,tc
 
 
 def nextpow2(i):
