@@ -40,18 +40,17 @@ def rdct(x, n=None, a=None, b=1):
     if n is None:
         n = m
     if a is None:
-        a = np.sqrt(n)
+        a = np.sqrt(2*n)
     if n > m:
         x = np.hstack((x, np.zeros(n-m, k)))
     elif n < m:
         x = np.vstack((x[:n+1, :], x[m:, :]))
 
     x = np.vstack((x[np.arange(0, n, 2), :],
-                   x[np.arange(2*np.fix(n/2), 1, -2), :]))
-
+                   x[np.arange(2*np.fix(n/2)-1, 0, -2).astype(int), :]))
     z = np.concatenate(([np.sqrt(2)],
                         2*np.exp((-0.5*1j*np.pi/n)*np.arange(1, n))))[np.newaxis].T
 
-    y = np.real(fft(x)*repmat(z, 1, k))/a
-    y[0, :] = y[1, :]*b
+    y = np.real(fft(x, axis=0)*repmat(z, 1, k))/a
+    y[0, :] = y[0, :]*b
     return y
