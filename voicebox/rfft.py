@@ -3,7 +3,7 @@ import numpy as np
 from numpy.fft import fft
 
 
-def rfft(x, n, d):
+def rfft(x, n=None, d=None):
     '''
     RFFT     Calculate the DFT of real data Y=(X,N,D)
     Data is truncated/padded to length N if specified.
@@ -21,9 +21,14 @@ def rfft(x, n, d):
     '''
 
     s = np.asarray(x.shape)
+    if d is None:
+        d = np.where(s > 1)[0][0]
+    if n is None:
+        n = s[d]
+
     if (s[0] * s[1]) == 1:
         return x
     else:
         y = fft(x, n, d)
         s[d] = 1+np.fix(n/2)
-        return y[:, :s[d]]
+        return y[:s[0], :s[1]]
