@@ -62,22 +62,28 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
         features = derivatives(features)
 
     model = load_model('Conv1D_LSTM_1_frame.h5')
-    pred_conv_lstm = model.predict(features.T[np.newaxis])[0, :, 0].T
+    pred_conv_lstm = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
 
     model = load_model('LSTM_1_frame.h5')
-    pred_lstm_only = model.predict(features.T[np.newaxis])[0, :, 0].T
-    print(pred_lstm_only.shape)
+    pred_lstm_only = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
     plt.subplot(3, 1, 1)
     plt.plot(np.arange(len(speech))/fs, speech, label='speech')
+    plt.title('speech amplitude')
+    plt.xlabel('time')
+    plt.ylabel('amplitude')
     plt.subplot(3, 1, 2)
     plt.plot(tx, pred_conv_lstm, label='Convolution_LSTM_Dense_Neural_Network')
+    plt.xlabel('time')
+    plt.title('Convolution_LSTM_Dense_Neural_Network')
+    plt.yticks([0, 1], ['non-speech', 'speech'])
     plt.subplot(3, 1, 3)
     plt.plot(tx, pred_lstm_only, label='LSTM_Dense Neural Network')
-    plt.legend()
-    import IPython
-    IPython.embed()
-    if show_plt:
-        plt.show()
+    plt.xlabel('time')
+    plt.title('LSTM_Dense_Neural_Network')
+    plt.yticks([0, 1], ['non-speech', 'speech'])
+    fig = plt.gcf()
+    fig.set_size_inches(12, 7, forward=True)
+
     if plt_save or excel:
         if not os.path.exists('results'):
             os.makedirs('results')
@@ -85,3 +91,6 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
         if not os.path.exists('results/png'):
             os.makedirs('results/png')
         plt.savefig('results/png/' + filename + '.png')
+
+    if show_plt:
+        plt.show()
