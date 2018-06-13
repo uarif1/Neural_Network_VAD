@@ -1,0 +1,75 @@
+
+import argparse
+import os
+import glob
+
+import numpy as np
+
+from scipy.io.wavfile import read
+
+from VAD import Neural_Network_VAD
+
+
+def _resolveargs():
+    parser = argparse.ArgumentParser(
+        description='This scripts performs Speech/Non-Speech'
+        + 'idenftification(SNI) for .WAV files, saves the plot as png'
+        + ' and the SNI results in an excel file')
+    parser.add_argument('--name', metavar='wav file./folder names',
+                        type=str, nargs='+', help='wav file locations '
+                        + 'ending in .wav or folder location with a '
+                        + 'file seperator')
+
+    parser.add_argument('--verbose', dest='verbose', action='store_true')
+    parser.add_argument('--no-verbose', dest='verbose', action='store_false')
+    parser.set_defaults(verbose=True)
+    parser.add_argument('--dispplt', dest='plt', action='store_true')
+    parser.add_argument('--no-dispplt', dest='plt', action='store_false')
+    parser.set_defaults(dispplt=True)
+    parser.add_argument('--saveplt', dest='saveplt', action='store_true')
+    parser.add_argument('--no-saveplt', dest='saveplt', action='store_false')
+    parser.set_defaults(saveplt=True)
+    parser.add_argument('--excel', dest='excel', action='store_true')
+    parser.add_argument('--no-excel', dest='excel', action='store_false')
+    parser.set_defaults(excel=True)
+    args = parser.parse_args()
+    return args
+
+
+def _resolvefilenames(files):
+    filenames = []
+    for name in files:
+        if os.path.isdir(name):
+            folderfiles = glob.glob(name+'*.wav')
+            if len(folderfiles) == 0:
+                print('No wav files in location %s' % (name))
+            else:
+                filenames.extend(folderfiles)
+        else:
+            if '.wav' in name:
+                filenames.append(name)
+            else:
+                print('The filename %s does not have .wav extension' % (name))
+    return filenames
+
+
+def main():
+    args = _resolveargs()
+    filenames = _resolvefilenames(args.name)
+
+    for file in filenames:
+        fs, speech = read(file)
+        if type(speech) == np.int16:
+            speech /= 2**(15)
+        if type(speech) == np.int32:
+            speech /= 2**(31)
+
+        if args.verbose:
+            print(args.verbose)
+            print('processing %s' % (file))
+        Neural_Network_VAD(speech, fs, file, show_plt=args.dispplt,
+                           plt_save=args.saveplt, excel=args.excel)
+
+
+if __name__ == '__main__':
+    main()
