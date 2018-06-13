@@ -16,6 +16,23 @@ DERIVATIVES = True
 
 
 def derivatives(features):
+    """
+    Given a vector with shape = (no of features, time stamps) return the
+    original feature vector along with the first and second derivatives
+    with shape (3* no of features, time stamps)
+
+    Parameters
+    ----------
+    features : np.array
+        features with shape (no of features, time stamps)
+
+    Returns
+    -------
+    np.array
+        original features along with first and second derivatives in shape
+        (3* no of features, time stamps)
+
+    """
     startframe = 10
     no_of_feats = features.shape[0]
     no_of_frames = features.shape[1]
@@ -43,8 +60,36 @@ def derivatives(features):
     return feat_der
 
 
-def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True,
+def Neural_Network_VAD(speech, fs=1, filename='VADres', show_plt=True,
                        plt_save=True, csvfile=True):
+    """
+    perform Speech/Non-speech identification at 25 ms frames giving output
+    as 1 (speech) or 0 (Non-speech) and save the results in a png plot and csv
+    file
+
+    Parameters
+    ----------
+    speech : np.array
+        mono speech signal: 1-D array
+    fs : float
+        sampling frequency.
+    filename : str
+        filename to be used for saving png and csv results.
+    show_plt : bool
+        option to show plot.
+    plt_save : bool
+        option to save plot.
+    csvfile : bool
+        option to save results in csv.
+
+    Returns
+    -------
+    tuple:
+        Speech/Non-Speech identification results using:
+            Convolution LSTM Dense Neural Network
+            LSTM Dense Neural Network
+
+    """
 
     samples_per_frame = int(TIME_PER_FRAME*fs)
     fx, tx, pv, fv = fxpefac(speech, fs, TIME_PER_FRAME)
