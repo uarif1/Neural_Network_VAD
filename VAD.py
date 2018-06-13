@@ -96,3 +96,4 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
 
     if show_plt:
         plt.show()
+    return pred_conv_lstm, pred_lstm_only
