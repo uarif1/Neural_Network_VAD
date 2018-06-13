@@ -14,7 +14,7 @@ def _resolveargs():
     parser = argparse.ArgumentParser(
         description='This scripts performs Speech/Non-Speech'
         + 'idenftification(SNI) for .WAV files, saves the plot as png'
-        + ' and the SNI results in an excel file')
+        + ' and the SNI results in an csv file')
     parser.add_argument('name', metavar='wav file./folder names',
                         type=str, nargs='+', help='wav file locations '
                         + 'ending in .wav or folder location with a '
@@ -29,9 +29,9 @@ def _resolveargs():
     parser.add_argument('--no-saveplt', dest='saveplt', action='store_false',
                         help='disable saving plot')
     parser.set_defaults(saveplt=True)
-    parser.add_argument('--no-excel', dest='excel', action='store_false',
-                        help='disable saving result in excel')
-    parser.set_defaults(excel=True)
+    parser.add_argument('--no-csvfile', dest='csvfile', action='store_false',
+                        help='disable saving result in csvfile')
+    parser.set_defaults(csvfile=True)
     args = parser.parse_args()
     return args
 
@@ -66,8 +66,9 @@ def main():
 
         if args.verbose:
             print('processing %s' % (file))
-        Neural_Network_VAD(speech, fs, file, show_plt=args.showplt,
-                           plt_save=args.saveplt, excel=args.excel)
+            name = file.split(os.sep)[-1]
+        Neural_Network_VAD(speech, fs, name, show_plt=args.showplt,
+                           plt_save=args.saveplt, csvfile=args.csvfile)
 
 
 if __name__ == '__main__':

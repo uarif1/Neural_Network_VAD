@@ -43,8 +43,8 @@ def derivatives(features):
     return feat_der
 
 
-def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=True,
-                       excel=True):
+def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True,
+                       plt_save=True, csvfile=True):
 
     samples_per_frame = int(TIME_PER_FRAME*fs)
     fx, tx, pv, fv = fxpefac(speech, fs, TIME_PER_FRAME)
@@ -86,7 +86,8 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
     fig = plt.gcf()
     fig.set_size_inches(12, 7, forward=True)
 
-    if plt_save or excel:
+    # save plot of specified
+    if plt_save or csvfile:
         if not os.path.exists('results'):
             os.makedirs('results')
     if plt_save:
@@ -94,6 +95,17 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
             os.makedirs('results/png')
         plt.savefig('results/png/' + filename + '.png')
 
+    # show plot if specicided
     if show_plt:
         plt.show()
+
+    # save in csv file if specified
+    if csvfile:
+        if not os.path.exists('results/csv'):
+            os.makedirs('results/png')
+        csvarr = np.vstack((tx, np.around(pred_conv_lstm), pred_lstm_only))
+        np.savetxt('results/png/' + filename + '.csv', csvarr.T, delimiter=',',
+                   header='time,Convolution_LSTM prediction,LSTM_prediction',
+                   comments='', fmt='%.4f, %1d, %1d')
+
     return pred_conv_lstm, pred_lstm_only
