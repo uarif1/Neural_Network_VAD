@@ -16,7 +16,7 @@
 '''
 
 import numpy as np
-from fromfrq import frq2bark
+from voicebox.fromfrq import frq2bark
 
 
 def erb2frq(erb):

@@ -20,11 +20,11 @@ import scipy.ndimage
 
 from numpy.matlib import repmat
 
-from spgrambw import spgrambw
-from filtbankm import filtbankm
-from stdspectrum import stdspectrum
-from v_findpeaks import v_findpeaks
-from gaussmixp import gaussmixp
+from voicebox.spgrambw import spgrambw
+from voicebox.filtbankm import filtbankm
+from voicebox.stdspectrum import stdspectrum
+from voicebox.v_findpeaks import v_findpeaks
+from voicebox.gaussmixp import gaussmixp
 
 
 def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,

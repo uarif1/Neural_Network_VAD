@@ -17,10 +17,10 @@
 
 import numpy as np
 
-from enframe import enframe
-from rfft import rfft
-from melbankm import melbankm
-from rdct import rdct
+from voicebox.enframe import enframe
+from voicebox.rfft import rfft
+from voicebox.melbankm import melbankm
+from voicebox.rdct import rdct
 
 
 def melcepst(s, fs=16000, nc=12, p=None, n=None, inc=None, fl=0, fh=0.5):

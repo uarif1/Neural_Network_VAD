@@ -17,9 +17,9 @@
 
 import numpy as np
 
-from filtbankm import filtbankm
-from enframe import enframe
-from rfft import rfft
+from voicebox.filtbankm import filtbankm
+from voicebox.enframe import enframe
+from voicebox.rfft import rfft
 
 
 def spgrambw(s, fs, mode='', bw=200, frange=None, tinc=0):
