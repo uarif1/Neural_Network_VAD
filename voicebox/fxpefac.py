@@ -346,7 +346,7 @@ def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,
                + repmat(ff[i-1, :][np.newaxis], numopt, 1))
 
         costdf = w[2]*np.minimum((df-w[5]) ** 2, w[3])
-
+        costdf[np.isnan(costdf)] = w[2]*w[3]
         # Cost related to the median pitch
         if mf == 0:  # this test was inverted in the original version
             costf = np.zeros((1, numopt))
@@ -380,6 +380,7 @@ def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,
                              (np.sum(amp, 1)
                               / np.asarray(np.mean(Ospec, 1)).T[0])[np.newaxis].T))}
 
+    pv = pv[np.newaxis].T
     return fx, tx, pv, fv
 
 
