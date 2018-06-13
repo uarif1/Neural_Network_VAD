@@ -15,22 +15,22 @@ def _resolveargs():
         description='This scripts performs Speech/Non-Speech'
         + 'idenftification(SNI) for .WAV files, saves the plot as png'
         + ' and the SNI results in an excel file')
-    parser.add_argument('--name', metavar='wav file./folder names',
+    parser.add_argument('name', metavar='wav file./folder names',
                         type=str, nargs='+', help='wav file locations '
                         + 'ending in .wav or folder location with a '
                         + 'file seperator')
 
-    parser.add_argument('--verbose', dest='verbose', action='store_true')
-    parser.add_argument('--no-verbose', dest='verbose', action='store_false')
+    parser.add_argument('--no-verbose', dest='verbose', action='store_false',
+                        help='disable verbose')
     parser.set_defaults(verbose=True)
-    parser.add_argument('--dispplt', dest='plt', action='store_true')
-    parser.add_argument('--no-dispplt', dest='plt', action='store_false')
-    parser.set_defaults(dispplt=True)
-    parser.add_argument('--saveplt', dest='saveplt', action='store_true')
-    parser.add_argument('--no-saveplt', dest='saveplt', action='store_false')
+    parser.add_argument('--no-showplt', dest='showplt', action='store_false',
+                        help='disable showing plot')
+    parser.set_defaults(showplt=True)
+    parser.add_argument('--no-saveplt', dest='saveplt', action='store_false',
+                        help='disable saving plot')
     parser.set_defaults(saveplt=True)
-    parser.add_argument('--excel', dest='excel', action='store_true')
-    parser.add_argument('--no-excel', dest='excel', action='store_false')
+    parser.add_argument('--no-excel', dest='excel', action='store_false',
+                        help='disable saving result in excel')
     parser.set_defaults(excel=True)
     args = parser.parse_args()
     return args
@@ -65,9 +65,8 @@ def main():
             speech /= 2**(31)
 
         if args.verbose:
-            print(args.verbose)
             print('processing %s' % (file))
-        Neural_Network_VAD(speech, fs, file, show_plt=args.dispplt,
+        Neural_Network_VAD(speech, fs, file, show_plt=args.showplt,
                            plt_save=args.saveplt, excel=args.excel)
 
 
