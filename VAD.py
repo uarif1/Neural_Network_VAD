@@ -149,7 +149,7 @@ def Neural_Network_VAD(speech, fs=1, filename='VADres', show_plt=True,
         if not os.path.exists('results/csv'):
             os.makedirs('results/csv')
         csvarr = np.vstack((tx, np.around(pred_conv_lstm), pred_lstm_only))
-        np.savetxt('results/png/' + filename + '.csv', csvarr.T, delimiter=',',
+        np.savetxt('results/csv/' + filename + '.csv', csvarr.T, delimiter=',',
                    header='time,Convolution_LSTM prediction,LSTM_prediction',
                    comments='', fmt='%.4f, %1d, %1d')
 
