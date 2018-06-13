@@ -66,6 +66,8 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
 
     model = load_model('LSTM_1_frame.h5')
     pred_lstm_only = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
+    fig = plt.figure()
+    fig.clf()
     plt.subplot(3, 1, 1)
     plt.plot(np.arange(len(speech))/fs, speech, label='speech')
     plt.title('speech amplitude')
@@ -78,7 +80,7 @@ def Neural_Network_VAD(speech, fs, filename='speech', show_plt=True, plt_save=Tr
     plt.yticks([0, 1], ['non-speech', 'speech'])
     plt.subplot(3, 1, 3)
     plt.plot(tx, pred_lstm_only, label='LSTM_Dense Neural Network')
-    plt.xlabel('time')
+    plt.xlabel('(time (s)')
     plt.title('LSTM_Dense_Neural_Network')
     plt.yticks([0, 1], ['non-speech', 'speech'])
     fig = plt.gcf()
