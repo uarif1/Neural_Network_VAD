@@ -23,56 +23,39 @@ import numpy as np
 from numpy.matlib import repmat
 from scipy.sparse import csr_matrix
 
-from fromfrq import frq2mel, frq2erb, frq2bark
-from tofrq import mel2frq, erb2frq, bark2frq
+from voicebox.fromfrq import frq2mel, frq2erb, frq2bark
+from voicebox.tofrq import mel2frq, erb2frq, bark2frq
 
 
 def filtbankm(n, fs, p=None, fl=None, fh=None, w='f'):
     '''
     FILTBANKM determine matrix for a linear/mel/erb/bark-spaced filterbank
-        [X,IL,IH]=(P,N,FS,FL,FH,W)
 
     NOTE: THIS FUNCTION HAS ONLY BEEN TESTED ON THE 'usl' OPTION
     NOTE: THIS FUNCTION DOES NOT RETURN THE LOWEST AND HIGHEST NON-ZERO FFT BIN
 
     Usage: # TODO: correct examples
-    (1) Calcuate the Mel-frequency Cepstral Coefficients
-
-    f=rfft(s);# rfft() returns only 1+floor(n/2) coefficients
-    x=filtbankm(p,n,fs,0,fs/2,'m');# n is the fft length, p is the number of filters wanted
-    z=log(x*abs(f).^2); multiply x by the power spectrum
-    c=dct(z); # take the DCT
-
-    (2) Calcuate the Mel-frequency Cepstral Coefficients efficiently
-
-    f=fft(s);    # n is the fft length, p is the number of filters wanted
-    [x,cf,na,nb]=filtbankm(p,n,fs,0,fs/2,'m');  # na:nb gives the fft bins that are needed
-    z=log(x*(f(na:nb)).*conj(f(na:nb)));        # multiply x by the power spectrum
-    c=dct(z);                              # take the DCT
-
-    (3) Plot the calculated filterbanks as a graph
-
-    plot((0:floor(n/2))*fs/n,filtbankm(p,n,fs,0,fs/2,'m')')   % fs=sample frequency
-
-    (4) Plot the calculated filterbanks as a spectrogram
-
-    filtbankm(p,n,fs,0,fs/2,'m');
 
     Parameters
     ----------
     n : int or list
         length of fft or [nf df fa] nfrq=number of input frequency bins,
         frequency increment (Hz), first bin freq (Hz).
+
     fs : float
         sample rate in Hz.
+
     p : int
         number of filters in filterbank or the filter spacing in k-mel/bark/erb
         [default ceil(4.6*log10(2*(fa+(nf-1)*df)))].
+
     fl : float
         low end of the lowest filter in Hz (see 'h' option)
         [default = 0 or set to 30Hz for 'l' option].
+
     fh : float
          high end of highest filter in Hz [default = fs/2].
+
     w : str
         any sensible combination of the following (default is 'f', use only one
         of 'l', 'e', 'b', 'm' in the combination):
@@ -101,22 +84,18 @@ def filtbankm(n, fs, p=None, fl=None, fh=None, w='f'):
                   frequencies (i.e. non-DC inputs have been doubled)
             'S' = single-sided output: do not mirror the non-DC filter
                   characteristics (i.e. double non-DC outputs)
-            'g' = plot filter coefficients as graph
-            'G' = plot filter coefficients as image [default if no output
-                  arguments present]
-
 
     Returns
     -------
     tuple:
+
         x : a sparse matrix containing the filterbank amplitudes
             If the il and ih outputs are given then size(x)=[p,ih-il+1]
             otherwise size(x)=[p,1+floor(n/2)]
             Note that the peak filter values equal 2 to account for the power
             in the negative FFT frequencies.
+
         cf :  the filterbank centre frequencies in Hz (see 'H' option)
-        # TODO il :  the lowest fft bin with a non-zero coefficient
-        # TODO ih :  the highest fft bin with a non-zero coefficient
 
      The routine performs interpolation of the input spectrum by convolving
      the power spectrum with a triangular filter and then simulates a
@@ -133,10 +112,8 @@ def filtbankm(n, fs, p=None, fl=None, fh=None, w='f'):
      (1) default frequencies won't work if the h option is specified
      (2) low default frequency is invalid if the 'l' option is specified
           Copyright (C) Mike Brookes 1997-2009
-          Version: $Id: filtbankm.m 8483 2016-09-13 15:48:05Z dmb $
 
-       VOICEBOX is a MATLAB toolbox for speech processing.
-       Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
+    VOICEBOX is a MATLAB toolbox for speech processing.
 
     '''
     # Note "FFT bin_0" assumes DC = bin 0 whereas "FFT bin_1" means DC = bin 1

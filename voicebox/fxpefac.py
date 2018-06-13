@@ -39,51 +39,70 @@ def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,
     ----------
     s : np.array
         speech signal
+
     fs : float
         Sample frequency (Hz)
 
     tinc : float
         Time increment between frames (s) [default: 0.01]
 
-    fstep
+    fstep : float
         frequency resolution of initial spectrogram(Hz) =5
-    fmax
+
+    fmax : float
         maximum frequency of initial spectrogram(Hz) =4000
-    fres
+
+    fres : float
         bandwidth of initial spectrogram(Hz) =20
-    fbanklo
+
+    fbanklo : float
         low frequency limit of log filterbank(Hz) =10
-    mpsmooth
+
+    mpsmooth : float
         width of smoothing filter for mean power =21
-    maxtranf
+
+    maxtranf : float
         maximum value of tranf cost term =1000
-    shortut
+
+    shortut : float
         max utterance length to average power of entire utterance =7
-    numopt
+
+    numopt : float
         number of possible frequencies per frame =3
-    pefact
+
+    pefact : float
         shape factor in PEFAC filter =1.8
-    flim
+
+    flim : np.array
         range of feasible fundamental frequencies(Hz) =[60, 400]
-    rampk
+
+    rampk : float
         constant for relative-amplitude cost term=1.1
-    rampcz
+
+    rampcz : float
         relative amplitude cost for missing peak=100
-    tmf
+
+    tmf : float
         median frequency smoothing interval(s)=2
-    w
+
+    w : np.array
         DP weights =[1.0000, 0.8250, 0.01868, 0.006773, 98.9, -0.4238]
-    sopt
+
+    sopt : str
         spectrogram options='ilcwpf'
 
 
     Returns
     -------
     tuple:
-        fx(nframe)     Estimated pitch (Hz)
-        tx(nframe)     Time at the centre of each frame (seconds).
-        pv(nframe)     Probability of the frame of being voiced
-        fv             dictionary containing feature vectors
+
+        fx(nframe):     Estimated pitch (Hz)
+
+        tx(nframe):     Time at the centre of each frame (seconds).
+
+        pv(nframe):     Probability of the frame of being voiced
+
+        fv        :     dictionary containing feature vectors
                        fv.vuvfea(nframe,2) = voiced/unvoiced GMM features
 
                             vuvfea: voiced-unvoiced features
@@ -106,10 +125,8 @@ def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,
  (1) do long files in chunks
  (2) option of n-best DP
            Copyright (C) Sira Gonzalez and Mike Brookes 2011
-      Version: $Id: fxpefac.m 10135 2017-09-27 07:15:56Z dmb $
 
    VOICEBOX is a MATLAB toolbox for speech processing.
-   Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
    '''
 
     # voiced/unvoiced decision based on 2-element feature vector

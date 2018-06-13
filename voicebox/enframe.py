@@ -5,22 +5,25 @@ from numpy.matlib import repmat
 
 def enframe(s, win, hop):
     '''
-    %ENFRAME split signal up into (overlapping) frames: one per row.
-    [F,T]=(X,WIN,HOP)
+    ENFRAME split signal up into (overlapping) frames: one per row.
 
     Parameters
     ----------
     s : np.array
         speech signal
+
     win : np.array
         window
+
     hop : int
         frame increment in samples
 
     Returns
     -------
     tuple
+
         f :   enframed data - one frame per row
+
         t :   fractional time in samples at the centre of each frame
               with the first sample being 1.
 

@@ -55,9 +55,11 @@ def spgrambw(s, fs, mode='', bw=200, frange=None, tinc=0):
 
         t : T(NT)= time axis values (in seconds). Input sample s(n) is at time
                    offset+n/fs.
+
         f : F(NF)= frequency axis values in Hz or, unless mode=H, other
                    selected frequency units according to mode: m=mel,
                    l=log10(Hz), b=bark,e=erb-rate
+
         b : B(NT,NF)= spectrogram values in power per x where x depends on the
                       'pPmbel' options clipped to DB range if 'D' option and
                       in dB if 'd' option.
@@ -75,10 +77,8 @@ def spgrambw(s, fs, mode='', bw=200, frange=None, tinc=0):
         option.
 
         Copyright (C) Mike Brookes 1997-2011
-        Version: $Id: spgrambw.m 6803 2015-09-12 09:31:44Z dmb $
 
         VOICEBOX is a MATLAB toolbox for speech processing.
-        Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
    '''
 
     # first decode the input arguments

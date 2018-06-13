@@ -26,9 +26,10 @@ def stdspectrum(s, m, f):
     Parameters
     ----------
 
-    s: type
+    s: Not used currently
       Spectrum type (either text or number - see below) or 0 to use bs/as
-    m: type
+
+    m: Not used currently
       mode: char 1 specifies output type (ONLY power spectrum supported),
                 p - power spectrum
 
@@ -42,10 +43,13 @@ def stdspectrum(s, m, f):
         b   (1) numerator of the output spectrum (modes 's' or 'z')
             (2) output waveform (mode 't')
             (3) outptut spectrum (modes 'f', 'm', 'p' or 'd')
+
         a   (1) denonminator of the output spectrum (modes 's' or 'z')
             (2) final state of the filter - use as the zi input of a future
             call (mode 't')
+
         si  spectrum type number (0 to 10)
+
         sn  spectrum name
 
     Spectrum type
@@ -99,10 +103,8 @@ def stdspectrum(s, m, f):
     Other candidates: (a) Z-weighting, (b) ISO226, (c) P.48 spectra
 
     Copyright (C) Mike Brookes 2008
-    Version: $Id: stdspectrum.m 8211 2016-07-20 20:59:16Z dmb $
 
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
 
     # sn = 'X1-LTASS-1994'

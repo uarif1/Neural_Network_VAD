@@ -30,38 +30,47 @@ def melcepst(s, fs=16000, nc=12, p=None, n=None, inc=None, fl=0, fh=0.5):
     Parameters
     ----------
 
-        s	: type
+        s	: np.array
             speech signal
-        fs : type
+
+        fs : float
             sample rate in Hz (default 16000)
-        nc : type
+
+        nc : int
             number of cepstral coefficients excluding 0'th coefficient
             [default 12]
-        p  : type
+
+        p  : int
             number of filters in filterbank
             [default: floor(3*log(fs)) =  approx 2.1 per ocatave]
-        n  : type
+
+        n  : int
             length of frame in samples [default power of 2 < (0.03*fs)]
-        inc: type
+
+        inc: float
             frame increment [default n/2]
-        fl : type
+
+        fl : float
             low end of the lowest filter as a fraction of fs [default = 0]
-        fh : type
+
+        fh : float
             high end of highest filter as a fraction of fs [default = 0.5]
 
-        Hamming window in time domain (default)
+        Hamming window in time domain
 
-        triangular shaped filters in mel domain (default)
+        triangular shaped filters in mel domain
 
-        filters act in the absolute magnitude domain (default)
+        filters act in the absolute magnitude domain
 
-        highest and lowest filters taper down to zero (default)
+        highest and lowest filters taper down to zero
 
     Returns
     -------
 
     tuple :
+
            c : mel cepstrum output: one frame per row.
+
            tc: fractional time in samples at the centre of each frame
                with the first sample being 1.
 
@@ -93,7 +102,7 @@ def melcepst(s, fs=16000, nc=12, p=None, n=None, inc=None, fl=0, fh=0.5):
     c = c[:, 1:]  # get rid of 0th coeff
     # nc = nc-1
 
-    return c,tc
+    return c, tc
 
 
 def nextpow2(i):

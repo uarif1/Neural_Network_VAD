@@ -19,8 +19,8 @@ import numpy as np
 
 from scipy.sparse import csr_matrix
 
-from fromfrq import frq2mel
-from tofrq import mel2frq
+from voicebox.fromfrq import frq2mel
+from voicebox.tofrq import mel2frq
 
 
 def melbankm(p, n, fs, fl=0, fh=0.5):
@@ -57,7 +57,9 @@ def melbankm(p, n, fs, fl=0, fh=0.5):
           in the negative FFT frequencies.
 
     mc    the filterbank centre frequencies in mel/erb/bark
+
     mn    the lowest fft bin with a non-zero coefficient
+
     mx    the highest fft bin with a non-zero coefficient
           Note: you must specify both or neither of mn and mx.
 

@@ -26,7 +26,6 @@ def gaussmixp(y, m, v=None, w=None, a=None, b=None):
     GAUSSMIXP calculate probability densities from or plot a Gaussian mixture
     model
 
-    Usage: (1) gaussmixp([],m,v,w)
 
     Parameters
     ----------
@@ -37,14 +36,19 @@ def gaussmixp(y, m, v=None, w=None, a=None, b=None):
         Row of Y(i,:) represents a single observation of the
         transformed GMM data point X: Y(i,1:q)=X(i,1:p)*A'+B'. If A and B are
         omitted and q=p, then Y(i,:)=X(i,:).
+
     m : np.array
         M(k,p) = mixture means for x(p)
+
     v : np.array
         V(k,p) or V(p,p,k) variances (diagonal or full)
-    w : type
+
+    w : np.array
         W(k,1) = weights (default = np.ones(m.shape[0], m.shape[1])
+
     a : type
         A(q,p) = transformation: y=x*A'+ B' (where y and x are row vectors)
+
     b : type
         B(q,1)   If A is omitted or null, y=x*I(B,:)' where I is the identity
             matrix. If B is also omitted or null, y=x*I(1:q,:)'.
@@ -55,15 +59,16 @@ def gaussmixp(y, m, v=None, w=None, a=None, b=None):
     tuple:
 
         lp : LP(n,1) = log probability of each data point
+
         rp : RP(n,k) = relative probability of each mixture
+
         kh : KH(n,1) = highest probability mixture
+
         kp : KP(n,1) = relative probability of highest probability mixture
 
     Copyright (C) Mike Brookes 2000-2009
-    Version: $Id: gaussmixp.m 7339 2016-01-06 18:05:30Z dmb $
 
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
 
     k, p = m.shape

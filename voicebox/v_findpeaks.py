@@ -30,9 +30,11 @@ def v_findpeaks(y, w, x=None):
     y : np.array
         COLUMN VECTOR Y(N,1) is the input signal
         (does not work with UInt datatype)
+
     w : type
         W  is the width tolerance; a peak will be eliminated if there is
         a higher peak within +-W. Units are samples or X values
+
     x : np.array
         X(N,1)   COLUMN VECTOR x-axis locations of Y values
         [default: 1:length(Y)]
@@ -40,9 +42,12 @@ def v_findpeaks(y, w, x=None):
     Returns
     -------
     tuple
+
         K(P,1)   are the positions in X of the peaks in Y (fractional if M='q')
+
         V(P,1)   are the peak amplitudes: if M='q' the amplitudes will be
                  interpolated whereas if M~='q' then V=Y(K).
+
     Outputs are column vectors regardless of whether Y is row or column.
     If there is a plateau rather than a sharp peak, the routine will place the
     peak in the centre of the plateau. When the W input argument is specified,
@@ -53,10 +58,8 @@ def v_findpeaks(y, w, x=None):
 
 
     Copyright (C) Mike Brookes 2005
-    Version: $Id: v_findpeaks.m 6564 2015-08-16 16:56:40Z dmb $
 
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
 
     ny = len(y)

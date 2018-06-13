@@ -26,8 +26,10 @@ def frq2bark(f, m=''):
 
     Parameters
     ----------
+
     f : numpy.array
         array of frequencies in Hz.
+
     m : str
         mode options (the default is '').
             'h'   use high frequency correction from [1]
@@ -43,7 +45,9 @@ def frq2bark(f, m=''):
     Returns
     -------
     tuple
+
         b : bark values
+
         c : Critical bandwidth: d(freq)/d(bark)
 
 
@@ -95,7 +99,6 @@ def frq2bark(f, m=''):
                   'Traunmuller1983', 'Zwicker1980', 'Location', 'South');
 
           Copyright (C) Mike Brookes 2006-2010
-          Version: $Id: frq2bark.m 4501 2014-04-24 06:28:21Z dmb $
 
     """
 
@@ -170,10 +173,12 @@ def frq2cent(frq):
     Return
     -------
     tuple
+
         c : Cents freq Scale
+
         cr : gradient in Hz/cent
 
-    TODO: PLOT GRAPH
+    # TODO: PLOT GRAPH
 
     Reference:
 
@@ -181,10 +186,8 @@ def frq2cent(frq):
          On the Musical Scales of Various Nations
          Journal of the Society of Arts, 1885, 485-527
       Copyright (C) Mike Brookes 1998
-      Version: $Id: frq2cent.m 3122 2013-06-19 19:02:47Z dmb $
 
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
     p = 1200/np.log(2)
     q = 5700-p*np.log(440)
@@ -234,7 +237,9 @@ def frq2erb(frq):
     Returns
     -------
     tuple
+
         erb : erb frequency scale
+
         bnd :
 
     TODO: MAKE GRAPH, FINDOUT bnd desc
@@ -251,10 +256,8 @@ def frq2erb(frq):
      [3] R. D. Patterson. Auditory filter shapes derived with noise
          stimuli. J. Acoust. Soc. Amer., 59: 640–654, 1976.
       Copyright (C) Mike Brookes 1998-2015
-      Version: $Id: frq2erb.m 5749 2015-03-01 16:01:14Z dmb $
 
    VOICEBOX is a MATLAB toolbox for speech processing.
-   Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
    '''
 
     u = np.array([6.23e-6, 93.39e-3, 28.52])
@@ -296,7 +299,9 @@ def frq2mel(frq):
     Returns
     -------
     tuple
+
         mel : Mel Scale array
+
         m : gradient in Hz/mel
 
     References:
@@ -318,10 +323,8 @@ def frq2mel(frq):
               "Discrete-Time Processing of Speech Signals", p380,
               Macmillan 1993
     Copyright(C) Mike Brookes 1998
-    Version: $Id: frq2mel.m 1874 2012-05-25 15: 41: 53Z dmb $
 
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http: // www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
 
      '''
 
@@ -357,14 +360,14 @@ def frq2midi(f):
     Returns
     -------
     tuple
+
         n : musical note numbers
+
         t : text representation of the note
 
 
     Copyright (C) Mike Brookes 1998
-    Version: $Id: frq2midi.m 713 2011-10-16 14:45:43Z dmb $
     VOICEBOX is a MATLAB toolbox for speech processing.
-    Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
 
     n = 69+12*np.log(np.abs(f)/440)/np.log(2)

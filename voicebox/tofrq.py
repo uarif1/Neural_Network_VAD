@@ -55,7 +55,9 @@ def erb2frq(erb):
     Returns
     -------
     tuple
+
         frq : array of frequencies in Hz.
+
         bnd :
 
     TODO: GRAPH, bnd
@@ -72,9 +74,7 @@ def erb2frq(erb):
          stimuli. J. Acoust. Soc. Amer., 59: 640–654, 1976.
 
       Copyright (C) Mike Brookes 1998
-      Version: $Id: erb2frq.m 5749 2015-03-01 16:01:14Z dmb $
       VOICEBOX is a MATLAB toolbox for speech processing.
-      Home page: http://www.ee.ic.ac.uk/hp/staff/dmb/voicebox/voicebox.html
     '''
 
     u = np.array([6.23e-6, 93.39e-3, 28.52])
