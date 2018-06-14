@@ -1,6 +1,6 @@
 # Neural Network VAD
 
-**This has only been tested on and is only expected to work using
+**This has only been tested and is only expected to work using
 Python 3.6 [64 bit] due to tensorflow requirement.**
 
 A package to perform Speech/Non-speech Identification (SNI) using
@@ -8,7 +8,7 @@ Neural Networks on .wav files.
 
 The function that performs SNI is in VAD.py and is called Neural_Network_VAD.
 Provided the speech signal (as a 1-D array) and the sampling frequency, it returns as
-a tuple the SNI results from evaluation on a Convolution-LSTM-Dense
+a tuple the SNI results from prediction using a Convolution-LSTM-Dense
 Neural Network (0 index of tuple) and a LSTM-Dense Neural Network
 (1st index of tuple).
 
