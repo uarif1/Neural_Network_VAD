@@ -18,3 +18,12 @@ file and as a csv file.
 use: python VAD_script.py  sample.wav
 
 for help: python VAD_script.py -h
+
+A sample wav file has been include in which the background noise has
+been obtained from [1] and the speech from [2].
+
+#### References
+
+[1] Koenig, M. (2018). Street Sounds | Effects | Sound Bites | Sound Clips from SoundBible.com. [online] Soundbible.com. Available at: http://soundbible.com/2175-Street.html [Accessed 14 Jun. 2018].
+
+[2] Fromtexttospeech.com. (2018). From Text To Speech - Free online TTS service. [online] Available at: http://www.fromtexttospeech.com/ [Accessed 14 Jun. 2018].
