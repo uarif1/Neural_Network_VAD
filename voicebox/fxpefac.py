@@ -204,11 +204,11 @@ def fxpefac(s, fs, tinc=0.01, fstep=5, fmax=4000, fres=20, fbanklo=10,
     if tx[-1] < shortut:  # if it is a short utterance
         eltass = np.mean(Ospec, 0)  # mean power per each frequency band
         eltass = smooth(eltass, mpsmooth)  # smooth in log frequency
-        eltass = eltass.T  # force a row vector
-
+        # eltass = eltass  # force a row vector
+        eltass = np.asarray(eltass)[0]
         # Linear AC
         alpha = ltass/eltass
-        alpha = alpha.T
+        # alpha = alpha.T
         alpha = repmat(alpha, nframes, 1)
         Ospec = np.real(np.multiply(Ospec, alpha))  # force O to have an average LTASS spectrum
 
