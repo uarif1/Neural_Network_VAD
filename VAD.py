@@ -106,15 +106,22 @@ def Neural_Network_VAD(speech, fs=1, filename='VADres', show_plt=True,
     if DERIVATIVES:
         features = derivatives(features)
 
-    model = load_model('Conv1D_LSTM_1_frame.h5')
-    pred_conv_lstm = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
+    # model = load_model('Conv1D_LSTM_1_frame.h5')
+    # pred_conv_lstm = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
 
-    model = load_model('LSTM_1_frame.h5')
-    pred_lstm_only = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
+    model = load_model('Conv_LSTM.h5')
+    pred_conv_lstm = model.predict(features.T[np.newaxis])[0].T[0] > 0.5
+
+    # model = load_model('LSTM_1_frame.h5')
+    # pred_lstm_only = model.predict(features.T[np.newaxis])[0, :, 1].T > 0.5
+
+    model = load_model('LSTM.h5')
+    pred_lstm_only = model.predict(features.T[np.newaxis])[0].T[0] > 0.5
+
     fig = plt.figure()
     fig.clf()
     plt.subplot(3, 1, 1)
-    plt.plot(np.arange(len(speech))/fs, speech, label='speech')
+    plt.plot(np.arange(len(speech)) / fs, speech, label='speech')
     plt.title('speech amplitude')
     plt.xlabel('time')
     plt.ylabel('amplitude')
